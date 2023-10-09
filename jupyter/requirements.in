@@ -1,0 +1,5 @@
+# pip-compile -q -o - | sed s:///::g > requirements.txt
+# pip-compile - --output-file=- < requirements.in > requirements.txt
+pandas
+seaborn
+openpyxl

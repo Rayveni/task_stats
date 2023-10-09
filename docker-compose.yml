@@ -1,0 +1,25 @@
+version: "3.91"
+services:
+  jupyter:
+      build:
+        context: ./jupyter/ 
+        dockerfile: Dockerfile        
+        args:
+          NB_USER: "my-user"
+      user: root
+      image: local_image/jupyter     
+      working_dir: /home/my-user/work
+      ports:
+        - "${app_ports}"
+      volumes: 
+      - type: bind
+        source: ${jupyter_notebooks}
+        target: /home/my-user/work   
+      environment: 
+        - CHOWN_HOME=yes
+        - restartable=yes 
+        - TZ=Europe/London
+        - DOCKER_STACKS_JUPYTER_CMD=notebook
+      #stdin_open: true
+      #tty: true
+      command: "start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''"    
